@@ -24,7 +24,7 @@ public class Config {
         CustomerRepository customerRepository = new CustomerRepository();
         CustumerService customerService = new CustumerServiceImpl(customer, customerRepository);
         CustomerView customerView = new CustomerView( customerService, customer);
-        AdminServiceImpl adminService = new AdminServiceImpl(admin);
+        AdminServiceImpl adminService = new AdminServiceImpl(admin, customerRepository);
         AdminView adminView = new AdminView(adminService, admin);
 
 

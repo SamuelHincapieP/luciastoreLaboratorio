@@ -106,6 +106,32 @@ public class MenuApp {
 
     public void showMenuCustomer(){
 
+        System.out.println("Menu Cliente");
+        while (true) {
+
+            System.out.println("1. Crear mi perfil 2. Ver mi perfil por id 3. Modifica mi perfil");
+
+            int option = sc.nextInt();
+            sc.nextLine();
+            switch (option) {
+                case 1:
+                    System.out.println("Crear mi perfil");
+                    customerView.createCustomer();
+                    break;
+                case 2:
+                    System.out.println("Ver mi  perfil");
+                    System.out.println("Ingrese su id para ver su perfil");
+                    int id = sc.nextInt();
+                    customerView.getCustumerById(id);
+                    break;
+                case 3:
+                    System.out.println("Modificar mi perfil");
+                    break;
+                default:
+                    System.out.println("Opcion no valida, por favor seleccione una opcion valida");
+            }
+        }
+
     }
 
 
@@ -125,12 +151,17 @@ public class MenuApp {
                     break;
                 case 2:
                     System.out.println("Ver perfil por id");
+                    System.out.println("Buscar perfil");
+                    System.out.println("Ingrese el id del  perfil a buscar");
+                    int id = sc.nextInt();
+                    customerView.getCustumerById(id);
                     break;
                 case 3:
                     System.out.println("Modificar perfil");
                     break;
                 case 4:
                     System.out.println("Ver perfiles");
+                    adminView.getAllCustomers();
                     break;
                 case 5:
                     System.out.println("Eliminar perfil");
@@ -140,8 +171,4 @@ public class MenuApp {
             }
         }
     }
-
-
-
-
 }

@@ -49,6 +49,7 @@ public class CustumerServiceImpl implements CustumerService {
         System.out.println("Cupo");
         double quote = sc.nextDouble();
         customer.setQuote(quote);
+        sc.nextLine();
 
         System.out.println("Tipo de Cliente");
         String customerType = sc.nextLine();
@@ -60,7 +61,8 @@ public class CustumerServiceImpl implements CustumerService {
 
     @Override
     public Optional<Customer> getCustomerById(int id) {
-        return Optional.empty();
+
+        return customerRepository.findCustomerById(id);
     }
 
     @Override

@@ -22,4 +22,10 @@ public class CustomerView {
     }
 
 
+    public void getCustumerById(int id){
+
+        customerService.getCustomerById(id).ifPresent(System.out::println);
+    }
+
+
 }

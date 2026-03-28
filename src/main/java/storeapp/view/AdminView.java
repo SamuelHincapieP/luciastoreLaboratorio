@@ -19,4 +19,9 @@ public class AdminView {
     }
 
 
+    public void getAllCustomers(){
+        adminService.getAllCustomers().forEach(System.out::println);
+    }
+
+
 }
