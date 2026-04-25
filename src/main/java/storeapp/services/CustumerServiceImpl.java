@@ -5,55 +5,26 @@ import storeapp.repository.CustomerRepository;
 import storeapp.utils.CustomerFormValidation;
 
 import java.util.Optional;
-import java.util.Scanner;
 
 public class CustumerServiceImpl implements CustumerService {
 
-    Scanner sc = new Scanner(System.in);
-
-    //Ahora vamos a comunicar las clases , para eso vamos a crear una instancia de la capa inmediatamente anterior
     private final CustomerRepository customerRepository;
 
-    public CustumerServiceImpl( CustomerRepository customerRepository) {
+    public CustumerServiceImpl(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
-
     }
 
     @Override
     public Customer createCustomer() {
-
         Customer customer = new Customer();
 
-        String prompt = "Ingrese el id del cliente";
-        customer.setId(CustomerFormValidation.validateInt(prompt));
-
-
-        System.out.println("Ingrese el nombre del cliente");
-        String name = sc.nextLine();
-        customer.setName(name);
-
-        System.out.println("INgrese el apellido");
-        String lastName = sc.nextLine();
-        customer.setLastName(lastName);
-
-        System.out.println("ingrese el email");
-        String email = sc.nextLine();
-        customer.setEmail(email);
-
-        System.out.println("Ingrese el password ");
-        String password = sc.nextLine();
-        customer.setPassword(password);
-
-        System.out.println("Estado Cliente ");
-
+        customer.setId(CustomerFormValidation.validateInt("Ingrese el id del cliente"));
+        customer.setName(CustomerFormValidation.validateString("Ingrese el nombre del cliente"));
+        customer.setLastName(CustomerFormValidation.validateString("Ingrese el apellido del cliente"));
+        customer.setEmail(CustomerFormValidation.validateString("Ingrese el email del cliente"));
+        customer.setPassword(CustomerFormValidation.validateString("Ingrese la contrasena del cliente"));
         customer.setStatus(CustomerStateSelector.selectCustomerState());
-
-        System.out.println("Cupo");
-        double quote = sc.nextDouble();
-        customer.setQuote(quote);
-        sc.nextLine();
-
-        System.out.println("Tipo de Cliente");
+        customer.setQuote(CustomerFormValidation.validateDouble("Ingrese el cupo del cliente"));
         customer.setCustomerType(CustomerTypeSelector.selectTypeCustomer());
 
         return customerRepository.saveCustomer(customer);
@@ -61,7 +32,6 @@ public class CustumerServiceImpl implements CustumerService {
 
     @Override
     public Customer getCustomerById(int id) {
-
         return customerRepository.findCustomerById(id);
     }
 
@@ -70,52 +40,52 @@ public class CustumerServiceImpl implements CustumerService {
         return Optional.empty();
     }
 
-
     @Override
     public Customer updateCustomer(int id) {
-
-        System.out.println("Estoy en el service");
         Customer customer = customerRepository.findCustomerById(id);
 
-        if(customer.getId() == id){
-
-            System.out.println("Actualizar 1. id 2. Nombre 3 Apellido 4.Correo 5. Contraseña");
-            int option = CustomerFormValidation.validateInt("Opcion");
-
-            switch (option){
-                case 1:
-                    customer.setId(CustomerFormValidation.validateInt("Actualizar id"));
-                    break;
-                case 2:
-                    customer.setName(CustomerFormValidation.validateString("Actualzar nombre"));
-                    break;
-                case 3:
-                    customer.setLastName(CustomerFormValidation.validateString("Actualizar Apellido"));
-                    break;
-                case 4:
-                    customer.setEmail(CustomerFormValidation.validateString("Actualizar Email"));
-                    break;
-                case 5:
-                    customer.setPassword(CustomerFormValidation.validateString("Actualizar contraseña"));
-                default:
-                    System.out.println("Seleccione una opcion");
-                    break;
-            }
-
-            customerRepository.updateCustomer(id);
-        }else{
-            System.out.println("Cliente  no encontrado");
+        if (customer == null) {
+            System.out.println(">>> Cliente con ID " + id + " no encontrado.");
+            return null;
         }
 
+        System.out.println("Que desea actualizar?");
+        System.out.println("1. Nombre  2. Apellido  3. Correo  4. Contrasena  5. Estado  6. Cupo  7. Tipo de cliente");
+        int option = CustomerFormValidation.validateInt("Opcion");
 
+        switch (option) {
+            case 1:
+                customer.setName(CustomerFormValidation.validateString("Nuevo nombre"));
+                break;
+            case 2:
+                customer.setLastName(CustomerFormValidation.validateString("Nuevo apellido"));
+                break;
+            case 3:
+                customer.setEmail(CustomerFormValidation.validateString("Nuevo email"));
+                break;
+            case 4:
+                customer.setPassword(CustomerFormValidation.validateString("Nueva contrasena"));
+                break;
+            case 5:
+                customer.setStatus(CustomerStateSelector.selectCustomerState());
+                break;
+            case 6:
+                customer.setQuote(CustomerFormValidation.validateDouble("Nuevo cupo"));
+                break;
+            case 7:
+                customer.setCustomerType(CustomerTypeSelector.selectTypeCustomer());
+                break;
+            default:
+                System.out.println(">>> Opcion no valida. No se realizo ninguna actualizacion.");
+                return customer;
+        }
 
+        System.out.println(">>> Cliente actualizado exitosamente.");
         return customer;
     }
 
     @Override
     public void deleteCustomer(int id) {
-
         customerRepository.deleteCustomer(id);
-
     }
 }

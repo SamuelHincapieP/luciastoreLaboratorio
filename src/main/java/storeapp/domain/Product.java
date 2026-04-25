@@ -1,5 +1,7 @@
 package storeapp.domain;
 
+import storeapp.domain.enums.ProductState;
+
 public class Product {
 
 
@@ -22,54 +24,23 @@ public class Product {
     public Product() {
     }
 
+    public int getIdProduct() { return idProduct; }
+    public void setIdProduct(int idProduct) { this.idProduct = idProduct; }
 
-    public int getIdProduct() {
-        return idProduct;
-    }
+    public String getDescription() { return description; }
+    public void setDescription(String description) { this.description = description; }
 
-    public void setIdProduct(int idProduct) {
-        this.idProduct = idProduct;
-    }
+    public double getPrice() { return price; }
+    public void setPrice(double price) { this.price = price; }
 
-    public String getDescription() {
-        return description;
-    }
+    public int getStock() { return stock; }
+    public void setStock(int stock) { this.stock = stock; }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+    public ProductState getProductState() { return productState; }
+    public void setProductState(ProductState productState) { this.productState = productState; }
 
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public int getStock() {
-        return stock;
-    }
-
-    public void setStock(int stock) {
-        this.stock = stock;
-    }
-
-    public boolean isState() {
-        return state;
-    }
-
-    public void setState(boolean state) {
-        this.state = state;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
+    public Category getCategory() { return category; }
+    public void setCategory(Category category) { this.category = category; }
 
     @Override
     public String toString() {
@@ -78,8 +49,8 @@ public class Product {
                 ", description='" + description + '\'' +
                 ", price=" + price +
                 ", stock=" + stock +
-                ", state=" + state +
-                ", category=" + category +
+                ", productState=" + productState +
+                ", category=" + (category != null ? category.getDescription() : "N/A") +
                 '}';
     }
 }
